@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: beamer_act
+# key: bact
+# --
+
+:BEAMER_act: [<+(1)->] $0

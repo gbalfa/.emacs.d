@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: inmathbb
+# key: inbb
+# --
+
+\\(\mathbb{$1}\\)$0

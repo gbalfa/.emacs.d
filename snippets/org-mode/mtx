@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: mtx
+# key: mtx
+# --
+
+#+ATTR_LATEX: :mode math :environment $1matrix :math-prefix $0

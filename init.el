@@ -29,11 +29,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (clang-format yasnippet-snippets which-key wgrep use-package synosaurus sphinx-doc solarized-theme smex rainbow-delimiters python-mode python-docstring py-autopep8 projectile paredit org-bullets multi-term moody minions helpful graphviz-dot-mode gnuplot forge flycheck-package flx evil-surround evil-org evil-magit engine-mode elpy dumb-jump dired-open dired-hide-dotfiles diff-hl deft counsel company-ycmd company-coq cdlatex auto-compile auctex ag))))
+   '(neotree srefactor-lisp srefactor ess slime-company slime bison-mode bison yasnippet-snippets geiser evil engine-mode wgrep smex flx counsel which-key helpful dired-open dired-hide-dotfiles deft synosaurus evil-surround use-package sphinx-doc solarized-theme rainbow-delimiters python-mode python-docstring py-autopep8 paredit org-bullets multi-term moody minions graphviz-dot-mode gnuplot forge flycheck-package evil-org evil-magit elpy dumb-jump diff-hl company-ycmd company-coq cdlatex auto-compile auctex ag)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(markdown-code-face ((t nil))))
+ '(fixed-pitch ((t (:family "Inconsolata" :height 70))))
+ '(markdown-code-face ((t nil)))
+ '(variable-pitch ((t (:family "Libre Baskerville" :height 70 :weight thin)))))

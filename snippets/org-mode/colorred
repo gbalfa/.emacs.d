@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: colorred
+# key: red
+# --
+
+\\color{red} $0

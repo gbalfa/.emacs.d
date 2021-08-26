@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Primitive eval
+# key: pev
+# --
+
+\bigg]_{$1}^{$2}$0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: colorblue
+# key: blue
+# --
+
+@@latex:{\color{blue}@@$1@@latex:}@@ $0

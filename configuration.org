@@ -1,11 +1,8 @@
 #+TITLE: Emacs Configuration
-#+AUTHOR: Harry R. Schwartz
-#+EMAIL: hello@harryrschwartz.com
-#+OPTIONS: toc:nil num:nil
 
 * Autor
 
-Harry R. Schwartz
+  Basada en configuración de Harry R. Schwartz
 
 * Configure =use-package=
 
@@ -174,7 +171,7 @@ The default frame title isn't useful. This binds it to the name of the current
 project:
 
 #+BEGIN_SRC emacs-lisp
-  (setq frame-title-format '((:eval (projectile-project-name))))
+  ;; (setq frame-title-format '((:eval (projectile-project-name))))
 #+END_SRC
 
 ** Use fancy lambdas
@@ -294,6 +291,13 @@ Note that this overrides the default font-related keybindings from
 =sensible-defaults=.
 
 #+BEGIN_SRC emacs-lisp
+  ;; (set-frame-font "Inconsolata 12" nil t)
+
+  (custom-theme-set-faces
+   'user
+   '(variable-pitch ((t (:family "Libre Baskerville" :height 70 :weight thin))))
+   '(fixed-pitch ((t ( :family "Inconsolata" :height 70)))))
+
   (setq hrs/default-font "Inconsolata")
   (setq hrs/default-font-size 11)
   (setq hrs/current-font-size hrs/default-font-size)
@@ -306,10 +310,12 @@ Note that this overrides the default font-related keybindings from
 
   (defun hrs/set-font-size ()
     "Set the font to `hrs/default-font' at `hrs/current-font-size'.
-  Set that for the current frame, and also make it the default for
-  other, future frames."
+    Set that for the current frame, and also make it the default for
+    other, future frames."
     (let ((font-code (hrs/font-code)))
-      (add-to-list 'default-frame-alist (cons 'font font-code))
+      (if (assoc 'font default-frame-alist)
+          (setcdr (assoc 'font default-frame-alist) font-code)
+        (add-to-list 'default-frame-alist (cons 'font font-code)))
       (set-frame-font font-code)))
 
   (defun hrs/reset-font-size ()
@@ -340,6 +346,80 @@ Note that this overrides the default font-related keybindings from
   (define-key global-map (kbd "C--") 'hrs/decrease-font-size)
 
   (hrs/reset-font-size)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ;; (setq hrs/default-font "Monospace")
+  ;; (setq hrs/default-font-size 11)
+  ;; (setq hrs/current-font-size hrs/default-font-size)
+
+  ;; (setq hrs/font-change-increment 1.1)
+
+  ;; (defun hrs/font-code ()
+  ;;   "Return a string representing the current font (like \"Inconsolata-14\")."
+  ;;   (concat hrs/default-font "-" (number-to-string hrs/current-font-size)))
+
+  ;; (defun hrs/set-font-size ()
+  ;;   "Set the font to `hrs/default-font' at `hrs/current-font-size'.
+  ;; Set that for the current frame, and also make it the default for
+  ;; other, future frames."
+  ;;   (let ((font-code (hrs/font-code)))
+  ;;     (if (assoc 'font default-frame-alist)
+  ;;         (setcdr (assoc 'font default-frame-alist) font-code)
+  ;;       (add-to-list 'default-frame-alist (cons 'font font-code)))
+  ;;     (set-frame-font font-code)))
+
+  ;; (defun hrs/reset-font-size ()
+  ;;   "Change font size back to `hrs/default-font-size'."
+  ;;   (interactive)
+  ;;   (setq hrs/current-font-size hrs/default-font-size)
+  ;;   (hrs/set-font-size))
+
+  ;; (defun hrs/increase-font-size ()
+  ;;   "Increase current font size by a factor of `hrs/font-change-increment'."
+  ;;   (interactive)
+  ;;   (setq hrs/current-font-size
+  ;;         (ceiling (* hrs/current-font-size hrs/font-change-increment)))
+  ;;   (hrs/set-font-size))
+
+  ;; (defun hrs/decrease-font-size ()
+  ;;   "Decrease current font size by a factor of `hrs/font-change-increment', down to a minimum size of 1."
+  ;;   (interactive)
+  ;;   (setq hrs/current-font-size
+  ;;         (max 1
+  ;;              (floor (/ hrs/current-font-size hrs/font-change-increment))))
+  ;;   (hrs/set-font-size))
+
+  ;; (define-key global-map (kbd "C-)") 'hrs/reset-font-size)
+  ;; (define-key global-map (kbd "C-+") 'hrs/increase-font-size)
+  ;; (define-key global-map (kbd "C-=") 'hrs/increase-font-size)
+  ;; (define-key global-map (kbd "C-_") 'hrs/decrease-font-size)
+  ;; (define-key global-map (kbd "C--") 'hrs/decrease-font-size)
+
+  ;; (hrs/reset-font-size)
 #+END_SRC
 
 ** Highlight the current line
@@ -391,13 +471,15 @@ Configure ycmd with the associated ==company== mode:
 
     :config
     (add-hook 'after-init-hook #'global-ycmd-mode)
-  ;;   (set-variable 'ycmd-server-command '("python" "-u" "/usr/share/ycmd/ycmd"))
-  ;; ;;
-    (set-variable 'ycmd-server-command '("python" "-u" "/home/gabriel/ycmd/ycmd"))
-    (set-variable 'ycmd-global-config "/home/gabriel/.ycm_extra_conf.py")
+    ;;   (set-variable 'ycmd-server-command '("python" "-u" "/usr/share/ycmd/ycmd"))
+    ;; ;;
+    (set-variable 'ycmd-server-command '("python" "-u" "/usr/share/vim/vimfiles/third_party/ycmd/ycmd"))
+    (set-variable 'ycm_use_clangd 1)
+    (set-variable 'ycm_clangd_binary_path "/usr/bin/clangd")
+    (set-variable 'ycmd-global-config "~/.ycm_extra_conf.py")
     )
 
-(setq ycmd--log-enabled t)
+  (setq ycmd--log-enabled t)
 
   ;;Company
   (use-package company-ycmd
@@ -469,11 +551,6 @@ I use =magit= to handle version control. It's lovely, but I tweak a few things:
     (setq magit-push-always-verify nil)
     (setq git-commit-summary-max-length 50)
 
-    (with-eval-after-load 'magit-remote
-      (magit-define-popup-action 'magit-push-popup ?P
-        'magit-push-implicitly--desc
-        'magit-push-implicitly ?p t))
-
     (add-hook 'with-editor-mode-hook 'evil-insert-state))
 #+END_SRC
 
@@ -505,18 +582,18 @@ when I'm in a Projectile-defined project. I use the current directory as a
 project root (if I'm not in a "real" project).
 
 #+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :bind
-    ("C-c v" . 'projectile-ag)
+  ;; (use-package projectile
+  ;;   :bind
+  ;;   ("C-c v" . 'projectile-ag)
 
-    :config
-    (define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
-    (evil-define-key 'motion ag-mode-map (kbd "C-p") 'projectile-find-file)
-    (evil-define-key 'motion rspec-mode-map (kbd "C-p") 'projectile-find-file)
+  ;;   :config
+  ;;   (define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
+  ;;   (evil-define-key 'motion ag-mode-map (kbd "C-p") 'projectile-find-file)
+  ;;   (evil-define-key 'motion rspec-mode-map (kbd "C-p") 'projectile-find-file)
 
-    (setq projectile-completion-system 'ivy)
-    (setq projectile-switch-project-action 'projectile-dired)
-    (setq projectile-require-project-root nil))
+  ;;   (setq projectile-completion-system 'ivy)
+  ;;   (setq projectile-switch-project-action 'projectile-dired)
+  ;;   (setq projectile-require-project-root nil))
 #+END_SRC
 
 ** =undo-tree=
@@ -533,13 +610,28 @@ I like tree-based undo management. I only rarely need it, but when I do, oh boy.
   (global-set-key (kbd "M-ñ") 'helm-show-kill-ring)
 #+END_SRC
 
+** =neotree=
+
+#+BEGIN_SRC emacs-lisp
+  (use-package neotree)
+  (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+  (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+  (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+  (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+  (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+  (evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
+  (evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
+  (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+  (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
+#+END_SRC
+
 * Programming environments
 
 I like shallow indentation, but tabs are displayed as 8 characters by default.
 This reduces that.
 
 #+BEGIN_SRC emacs-lisp
-  (setq-default tab-width 2)
+;;  (setq-default tab-width 2)
 #+END_SRC
 
 Treating terms in CamelCase symbols as separate words makes editing a little
@@ -615,6 +707,22 @@ consecutive comments as a single comment.
 
 ** Lisps
 
+Common-lisp
+
+#+BEGIN_SRC emacs-lisp
+  (use-package slime)
+  (use-package slime-company)
+  (setq inferior-lisp-program "sbcl")
+  (use-package srefactor)
+  (require 'srefactor-lisp)
+#+END_SRC
+
+Racket y Scheme.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package geiser)
+#+END_SRC
+
 I like to use =paredit= in Lisp modes to balance parentheses (and more!).
 
 #+BEGIN_SRC emacs-lisp
@@ -636,7 +744,8 @@ highlighting the whole expression when point is on a parenthesis.
         '(clojure-mode-hook
           emacs-lisp-mode-hook
           lisp-mode-hook
-          scheme-mode-hook))
+          scheme-mode-hook
+          racket-mode-hook))
 
   (dolist (hook lispy-mode-hooks)
     (add-hook hook (lambda ()
@@ -686,6 +795,7 @@ Use =flycheck= for syntax checking:
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'elpy-mode-hook 'flycheck-mode)
+  (setq flycheck-python-flake8-executable "flake8")
 #+END_SRC
 
 Format code according to PEP8 on save:
@@ -715,18 +825,26 @@ Documentation whith Sphinx and Python-docstring.
 Clang format.
 
 #+BEGIN_SRC emacs-lisp
+  (load "/usr/share/clang/clang-format.el")
+  (global-set-key [C-M-tab] 'clang-format-region)
   ;; clang-format can be triggered using C-c C-f
-  (use-package clang-format
-    :ensure t
-    :config
-    (add-hook
-     'c++-mode-hook
-     (lambda ()
-       (local-set-key (kbd "C-c C-f") #'clang-format-region))))
+  ;; (use-package clang-format
+  ;;   :ensure t
+  ;;   :config
+  ;;   (add-hook
+  ;;    'c++-mode-hook
+  ;;    (lambda ()
+  ;;      (local-set-key (kbd "C-c C-f") #'clang-format-region))))
 
-  ;; Format style.
-  (setq clang-format-style-option "Google")
+  ;; ;; Format style.
+  (setq clang-format-style "google")
 #+END_SRC
+
+** Lex
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package bison-mode)
+   #+END_SRC
 
 ** =sh=
 
@@ -802,7 +920,26 @@ I add a bunch of hooks to =term-mode=:
   (use-package org)
 #+END_SRC
 
+** Options
+
+   Alphabetical ordered items
+
+   #+BEGIN_SRC emacs-lisp
+     (setq org-list-allow-alphabetical t)
+   #+END_SRC
+
+   Table captions below
+
+   #+begin_src emacs-lisp
+     (setq org-latex-caption-above nil)
+   #+end_src
+
 ** Display preferences
+
+#+BEGIN_SRC emacs-lisp
+  ;; bigger latex fragment
+  (plist-put org-format-latex-options :scale 3)
+#+END_SRC
 
 I like to see an outline of pretty bullets instead of a list of asterisks.
 
@@ -852,7 +989,7 @@ the location of an index file (my main todo list), and archive finished tasks in
 =~/documents/org/archive.org=.
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-directory "~/documents/org")
+  (setq org-directory "~/Documents/Org")
 
   (defun org-file-path (filename)
     "Return the absolute address of an org file, given its relative name."
@@ -1013,7 +1150,9 @@ Allow =babel= to evaluate Emacs lisp, Ruby, dot, or Gnuplot code.
    '((emacs-lisp . t)
      (ruby . t)
      (dot . t)
-     (gnuplot . t)))
+     (gnuplot . t)
+     (scheme . t)
+     (octave . t)))
 #+END_SRC
 
 Don't ask before evaluating code blocks.
@@ -1051,9 +1190,9 @@ I'd like to always use Firefox, so:
 
 #+BEGIN_SRC emacs-lisp
   (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program "firefox")
+        browse-url-generic-program "chromium")
 
-  (setenv "BROWSER" "firefox")
+  (setenv "BROWSER" "chromium")
 #+END_SRC
 
 **** Exporting to PDF
@@ -1065,9 +1204,9 @@ this enables that.
 
 #+BEGIN_SRC emacs-lisp
   (setq org-latex-pdf-process
-        '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-          "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-          "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+        '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 #+END_SRC
 
 Include the =minted= package in all of my LaTeX exports.
@@ -1082,7 +1221,7 @@ Include the =minted= package in all of my LaTeX exports.
 I have a few Org project definitions that I maintain in a separate elisp file.
 
 #+BEGIN_SRC emacs-lisp
-  (load-file ".emacs.d/projects.el")
+;;  (load-file "~/.emacs.d/projects.el")
 #+END_SRC
 
 ** TeX configuration
@@ -1109,7 +1248,8 @@ Open compiled PDFs in =zathura= instead of in the editor.
   (add-hook 'org-mode-hook
         '(lambda ()
            (delete '("\\.pdf\\'" . default) org-file-apps)
-           (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))))
+           (add-to-list 'org-file-apps '("\\.pdf\\'" . "okular %s"))
+           (org-cdlatex-mode)))
 #+END_SRC
 
 Enable a minor mode for dealing with math (it adds a few useful keybindings),
@@ -1123,56 +1263,21 @@ I'm usually actually in an org document.
               (setq TeX-master t)))
 #+END_SRC
 
-* Daily checklist
-
-There are certain things I want to do regularly. I store those in a checklist.
-Because different things happen on different days, the checklist is an Org
-document generated by a Ruby script.
-
-Running =hrs/today= either opens today's existing checklist (if it exists), or
-renders today's new checklist, copies it into an Org file in =/tmp=, and opens
-it.
-
-#+BEGIN_SRC emacs-lisp
-  (setq hrs/checklist-script "~/bin/daily-checklist")
-
-  (defun hrs/today-checklist-filename ()
-    "The filename of today's checklist."
-    (concat "/home/hrs/documents/checklists/daily-checklist-" (format-time-string "%Y-%m-%d") ".org"))
-
-  (defun hrs/today ()
-    "Take a look at today's checklist."
-    (interactive)
-    (let ((filename (hrs/today-checklist-filename)))
-      (if (file-exists-p filename)
-          (find-file filename)
-        (progn
-          (shell-command (concat hrs/checklist-script " > " filename))
-          (find-file filename)))))
-#+END_SRC
-
-Open the checklist and my TODO list side-by-side:
-
-#+BEGIN_SRC emacs-lisp
-  (defun hrs/dashboard ()
-    (interactive)
-    (delete-other-windows)
-    (hrs/today)
-    (split-window-right)
-    (hrs/open-index-file))
-
-  (global-set-key (kbd "C-c d") 'hrs/dashboard)
-#+END_SRC
-
 * Writing prose
 
-** Ispell
+
+** Plain text without line breaks
+ #+BEGIN_SRC emacs-lisp
+   (setq org-ascii-text-width most-positive-fixnum)
+#+END_SRC
+
+** ispell
 
 Spell checker configurations.
 
 #+BEGIN_SRC emacs-lisp
-(setq ispell-program-name "hunspell")
-(setq ispell-dictionary "es_CL")
+  (setq ispell-program-name "hunspell -d")
+  (setq ispell-dictionary "es")
 #+END_SRC
 
 ** Enable spell-checking in the usual places
@@ -1344,7 +1449,7 @@ Open media with the appropriate programs.
   (use-package dired-open
     :config
     (setq dired-open-extensions
-          '(("pdf" . "zathura")
+          '(("pdf" . "okular")
             ("mkv" . "vlc")
             ("mp3" . "vlc")
             ("mp4" . "vlc")
@@ -1475,7 +1580,6 @@ really helpful for some modes (like =projectile=, for example).
 ** Configure =yasnippet=
 
 #+BEGIN_SRC emacs-lisp
-  (use-package yasnippet-snippets)
   (use-package yasnippet)
 #+END_SRC
 
@@ -1483,8 +1587,12 @@ I keep my snippets in =~/.emacs/snippets/text-mode=, and I always want =yasnippe
 enabled.
 
 #+BEGIN_SRC emacs-lisp
-  ;;(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+  (setq yas-snippet-dirs '("~/.emacs.d/snippets" "~/.emacs.d/elpa/yasnippet-snippets-20200526.907/snippets"))
   (yas-global-mode 1)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet-snippets)
 #+END_SRC
 
 I /don’t/ want =yas= to automatically indent the snippets it inserts. Sometimes
@@ -1492,7 +1600,7 @@ this looks pretty bad (when indenting org-mode, for example, or trying to guess
 at the correct indentation for Python).
 
 #+BEGIN_SRC emacs-lisp
-  (setq yas/indent-line nil)
+  (setq yas-indent-line t)
 #+END_SRC
 
 ** Configure =ivy= and =counsel=
@@ -1519,6 +1627,7 @@ This configuration:
     (use-package smex)
 
     (ivy-mode 1)
+
     (setq ivy-use-virtual-buffers t)
     (setq ivy-count-format "(%d/%d) ")
     (setq ivy-initial-inputs-alist nil)
@@ -1574,7 +1683,7 @@ results and =C-c C-c= to stop, just like in =dired=.
 ** Use projectile everywhere
 
 #+BEGIN_SRC emacs-lisp
-  (projectile-global-mode)
+  ;; (projectile-global-mode)
 #+END_SRC
 
 ** Add a bunch of engines for =engine-mode=

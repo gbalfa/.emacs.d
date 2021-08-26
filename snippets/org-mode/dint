@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Definite integral
+# key: dint
+# --
+
+\int_{$1}^{$2}$0

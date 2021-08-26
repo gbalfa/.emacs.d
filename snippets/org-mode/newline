@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: New Line
+# key: nl
+# --
+
+\\newline
+$0

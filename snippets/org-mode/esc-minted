@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: escape-minted
+# key: escm
+# --
+
+|\bf{$0}|

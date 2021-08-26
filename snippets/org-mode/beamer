@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: beamer
+# key: be
+# --
+
+#+Beamer: $0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: vectorhat
+# key: vec
+# --
+
+\\vec{$1}$0

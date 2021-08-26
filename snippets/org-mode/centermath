@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: center math
+# key: inc
+# --
+
+\\[$0 \\]
